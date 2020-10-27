@@ -1,0 +1,30 @@
+{
+  "name": "ghips-dashboard",
+  "version": "0.1.0",
+  "description": "Serveur et dashboard de Ghips. Gestion des urls et des ports séries.",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/lucienmary/Ghips-dashboard.git"
+  },
+  "keywords": [
+    "Ghips",
+    "dashboard",
+    "serialports"
+  ],
+  "author": "Lucien MARY",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/lucienmary/Ghips-dashboard/issues"
+  },
+  "homepage": "https://github.com/lucienmary/Ghips-dashboard#readme",
+  "dependencies": {
+    "@serialport/parser-readline": "^9.0.1",
+    "ejs": "^3.1.5",
+    "express": "^4.17.1",
+    "serialport": "^9.0.2"
+  }
+}
