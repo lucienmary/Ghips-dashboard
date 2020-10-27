@@ -1,0 +1,64 @@
+main{
+    padding-bottom: 75px;
+}
+header{
+    height: 7vh;
+}
+footer{
+    margin: 0;
+    margin-top: -30px;
+    bottom: 0;
+}
+footer p{
+    margin: 0;
+}
+.panel-tool{
+    padding: 60px 60px;
+    margin-top: 25px;
+    border-radius: 5px;
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+}
+.infos{
+    position: relative;
+    margin-bottom: 30px;
+}
+.infos:after{
+    content: '';
+    position: absolute;
+    left: 0;
+    width: 100%;
+    height: 1px;
+    margin-top: 38px;
+    background-color: lightgrey;
+}
+.infos:last-child:after{
+    content: '';
+    left: 0;
+    width: 0;
+}
+.dot{
+
+    width: 12px;
+    height: 12px;
+    margin-top: 6px;
+    display: inline-block;
+    border-radius: 2px;
+    position: absolute;
+    right: 0;
+}
+.dot--orange{
+    background-color: orange;
+}
+.dot--red{
+    background-color: #bd2130;
+}
+.dot--green{
+    background-color: #4caf50;
+}
+.dot--unknow{
+    background-color: #e83eba;
+}
+.custom-control-input:checked~.custom-control-label::before{
+    background-color: orange;
+    border-color: darkorange;
+}
