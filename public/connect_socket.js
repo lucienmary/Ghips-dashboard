@@ -3,6 +3,7 @@ var socket = io.connect('http://'+ localIP +':6533/');
 
 socket.on('new_connection', function(msg) {
     console.log('%c'+ msg, 'color: lightgreen');
+    $('#infosSync span').addClass('dot--green');
 })
 
 

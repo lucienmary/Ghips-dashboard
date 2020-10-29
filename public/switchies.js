@@ -1,32 +1,16 @@
 // const localIP = sessionStorage.getItem('local-IP');
 const serverAdress = 'http://'+ localIP +':6533/';
 
-$('#switch-blue-led').click(() =>{
-    let positionSwitch;
-    if ($('#switch-blue-led').is(':checked')) positionSwitch = 1;
-    else positionSwitch = 0;
-    $.get(serverAdress + "blue-" + positionSwitch)
-    .fail(function() {
-        alert("La requête GET a retourné une erreur. (fichier perso statique switchies.js)");
-    });
-})
+$('#switch-blue-led').click(() =>testSwitch('blue'))
 
-$('#switch-green-led').click(() =>{
-    let positionSwitch;
-    if ($('#switch-green-led').is(':checked')) positionSwitch = 1;
-    else positionSwitch = 0;
-    $.get(serverAdress + "green-" + positionSwitch)
-    .fail(function() {
-        alert("La requête GET a retourné une erreur. (fichier perso statique switchies.js)");
-    });
-})
+$('#switch-green-led').click(() =>testSwitch('green'))
 
-$('#switch-yellow-led').click(() =>{
+$('#switch-yellow-led').click(() =>testSwitch('yellow'))
+
+function testSwitch(color) {
     let positionSwitch;
-    if ($('#switch-yellow-led').is(':checked')) positionSwitch = 1;
+    if ($('#switch-'+color+'-led').is(':checked')) positionSwitch = 1;
     else positionSwitch = 0;
-    $.get(serverAdress + "yellow-" + positionSwitch)
-    .fail(function() {
-        alert("La requête GET a retourné une erreur. (fichier perso statique switchies.js)");
-    });
-})
+    $.get(serverAdress + "switch/" + color +"-" + positionSwitch)
+    .fail(() => { alert("La requête GET a retourné une erreur. (fichier perso statique switchies.js)") });
+}
