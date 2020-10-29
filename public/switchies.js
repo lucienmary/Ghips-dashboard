@@ -1,4 +1,5 @@
-const serverAdress = "http://192.168.0.21:99/";
+// const localIP = sessionStorage.getItem('local-IP');
+const serverAdress = 'http://'+ localIP +':6533/';
 
 $('#switch-blue-led').click(() =>{
     let positionSwitch;
