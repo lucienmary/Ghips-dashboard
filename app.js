@@ -1,7 +1,7 @@
 var express = require('express');
 var app = express();
 const ejs = require('ejs');
-const os=require('os');
+const os = require('os');
 
 app.use("/public", express.static(__dirname + '/public'));
 
@@ -9,7 +9,7 @@ app.use("/public", express.static(__dirname + '/public'));
 // ------------ Serial Port. ---------------------------------------- //
 const SerialPort = require('serialport');
 const Readline = require('@serialport/parser-readline');
-const port = new SerialPort('/dev/ttyACM0', { baudRate: 9600 });
+const port = new SerialPort('/dev/cu.usbmodem14201', { baudRate: 9600 }); // => /dev/ttyACM0
 const parser = port.pipe(new Readline({ delimiter: '\n' }));
 
 port.on("open", function() {
@@ -39,18 +39,19 @@ function getLocalIP() {
 var server = app.listen(6533);
 console.log('<3 Server running <3');
 
+// ----------------------------------------------------------------- //
+// ------------- Routes. ------------------------------------------- //
+
+// Dashboard.
+app.get('/', function(req, res) {
+    res.setHeader('Content-Type', 'text/html');
+    res.render('dashboard.ejs', {local_ip: ip});
+});
+
 // Chargement de socket.io
 const io = require('socket.io')(server);
 io.sockets.on('connection', function (socket) {
 socket.emit('new_connection', 'Socket.io > Ready! 🔥');
-    // ----------------------------------------------------------------- //
-    // ------------- Routes. ------------------------------------------- //
-
-    // Dashboard.
-    app.get('/', function(req, res) {
-        res.setHeader('Content-Type', 'text/html');
-        res.render('dashboard.ejs', {local_ip: ip});
-    });
 
     // Envoi port série + sync. switch.
     app.get('/switch/:nameAndValue', function(req, res) {
@@ -60,4 +61,8 @@ socket.emit('new_connection', 'Socket.io > Ready! 🔥');
         socket.broadcast.emit('switch-'+ paramsSwitch[0] +'-led', paramsSwitch[1]);
         res.sendStatus(200);
     });
+});
+
+port.on('data', function(data) {
+console.log('data: ' + data);
 });
