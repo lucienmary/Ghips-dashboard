@@ -17,7 +17,17 @@
             <div class="container">
                 <div class="row">
                     <div class="col-10 offset-1 col-md-8 offset-md-2 bg-white panel-tool">
-                        <h2>Switch des LEDs</h2>
+                        <h2>Input chambre<span id="dot-inputChambre" class="dot dot--red dot--title"></span></h2>
+                        <p class="infos">Température: <span id="temp"><strong>--°C</strong></span></p>
+                        <p class="infos">Temp. ressentie: <span id="temp-r"><strong>--°C</strong></span></p>
+                        <p class="infos">Humidité: <span id="hum"><strong>--%</strong></span></p>
+                    </div>
+                    <div class="col-10 offset-1 col-md-8 offset-md-2 bg-white panel-tool">
+                        <h2>Switch des LEDs<span class="dot dot--green dot--title"></span></h2>
+                        <div class="custom-control custom-switch">
+                            <input type="checkbox" class="custom-control-input" disabled id="switch-all-led">
+                            <label class="custom-control-label" for="switch-all-led">Toutes les LEDs</label>
+                        </div>
                         <div class="custom-control custom-switch">
                             <input type="checkbox" class="custom-control-input" id="switch-blue-led">
                             <label class="custom-control-label" for="switch-blue-led">LED bleue</label>
@@ -35,10 +45,10 @@
                     </div>
 
                     <div class="col-10 offset-1 col-md-8 offset-md-2 bg-white panel-tool">
-                        <h2>Capteur pyrotechnique</h2>
+                        <h2>Capteur pyrotech.<span class="dot dot--red dot--title"></span></h2>
                         <div class="custom-control custom-switch">
-                            <input type="checkbox" class="custom-control-input" id="switch-pyro">
-                            <label class="custom-control-label" disabled for="switch-piro">Cateur pyro 01</label>
+                            <input type="checkbox" disabled class="custom-control-input" id="switch-pyro">
+                            <label class="custom-control-label" for="switch-piro">Cateur pyro 01</label>
                         </div>
                     </div>
 

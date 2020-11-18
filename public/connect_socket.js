@@ -19,3 +19,11 @@ socket.on('switch-yellow-led', function(val) {
     if(val == 1) $("#switch-yellow-led").prop("checked", true);
     else $('#switch-yellow-led').prop("checked", false);
 })
+
+// Temp & humidité.
+socket.on('DHT-measure', function(dataOnMsg) {
+    $('#dot-inputChambre').addClass('dot--green');
+    $('#hum strong').text(dataOnMsg[0] + '%');
+    $('#temp strong').text(dataOnMsg[1] + '° C');
+    $('#temp-r strong').text(dataOnMsg[2] + '° C');
+})

@@ -13,12 +13,14 @@ const port = new SerialPort('/dev/cu.usbmodem14201', { baudRate: 9600 }); // => 
 const parser = port.pipe(new Readline({ delimiter: '\n' }));
 
 port.on("open", function() {
-    console.log('Communication série > Ready!');
+    console.log('\x1b[32m%s\x1b[0m', 'Communication série > Ready!');
 });
 // ----------------------------------------------------------------- //
 // ------------ Recup IP Locale. ----------------------------------- //
 var ip = getLocalIP();
-console.log(ip);
+console.log('\x1b[36m%s\x1b[0m', '\n----------------------------');
+console.log('\x1b[33m%s\x1b[0m', ' Adresse: '+ ip + ':6533');
+console.log('\x1b[36m%s\x1b[0m', '----------------------------\n');
 
 function getLocalIP() {
  const interfaces = os.networkInterfaces();
@@ -37,7 +39,6 @@ function getLocalIP() {
 // ------------ Server listening + websocket. ---------------------- //
 
 var server = app.listen(6533);
-console.log('<3 Server running <3');
 
 // ----------------------------------------------------------------- //
 // ------------- Routes. ------------------------------------------- //
@@ -61,8 +62,23 @@ socket.emit('new_connection', 'Socket.io > Ready! 🔥');
         socket.broadcast.emit('switch-'+ paramsSwitch[0] +'-led', paramsSwitch[1]);
         res.sendStatus(200);
     });
-});
 
-port.on('data', function(data) {
-console.log('data: ' + data);
+    var msgIsRunning = '';
+
+    port.on('data', function(data) {
+
+        msgIsRunning = msgIsRunning + data;
+
+        if(msgIsRunning.indexOf("`") > 0){
+            var cleanedMsg = msgIsRunning.replace('`', '');
+            cleanedMsg = cleanedMsg.replace(/(\r\n|\n|\r)/gm,"");
+
+            var dataOnMsg = cleanedMsg.split('-');
+
+            socket.emit('DHT-measure', dataOnMsg);
+
+            msgIsRunning = '';
+        }
+    });
+
 });
