@@ -17,17 +17,13 @@
             <div class="container">
                 <div class="row">
                     <div class="col-10 offset-1 col-md-8 offset-md-2 bg-white panel-tool">
-                        <h2>Input chambre<span id="dot-inputChambre" class="dot dot--red dot--title"></span></h2>
+                        <h2 id="section-input">Input chambre<span class="dot dot--red dot--title"></span></h2>
                         <p class="infos">Température: <span id="temp"><strong>--°C</strong></span></p>
                         <p class="infos">Temp. ressentie: <span id="temp-r"><strong>--°C</strong></span></p>
                         <p class="infos">Humidité: <span id="hum"><strong>--%</strong></span></p>
                     </div>
                     <div class="col-10 offset-1 col-md-8 offset-md-2 bg-white panel-tool">
-                        <h2>Switch des LEDs<span class="dot dot--green dot--title"></span></h2>
-                        <div class="custom-control custom-switch">
-                            <input type="checkbox" class="custom-control-input" disabled id="switch-all-led">
-                            <label class="custom-control-label" for="switch-all-led">Toutes les LEDs</label>
-                        </div>
+                        <h2 id="section-led">Switch des LEDs<span class="dot dot--red dot--title"></span></h2>
                         <div class="custom-control custom-switch">
                             <input type="checkbox" class="custom-control-input" id="switch-blue-led">
                             <label class="custom-control-label" for="switch-blue-led">LED bleue</label>
@@ -42,10 +38,15 @@
                             <input type="checkbox" class="custom-control-input" id="switch-yellow-led">
                             <label class="custom-control-label" for="switch-yellow-led">LED jaune</label>
                         </div>
+
+                        <div class="btn-container">
+                            <button id="switch-all-up-led" type="button" class="btn btn-primary">Allumer tout</button>
+                            <button id="switch-all-down-led" type="button" class="btn btn-primary">Éteindre tout</button>
+                        </div>
                     </div>
 
                     <div class="col-10 offset-1 col-md-8 offset-md-2 bg-white panel-tool">
-                        <h2>Capteur pyrotech.<span class="dot dot--red dot--title"></span></h2>
+                        <h2 id="section-capteur_pyro">Capteur pyrotech.<span class="dot dot--red dot--title"></span></h2>
                         <div class="custom-control custom-switch">
                             <input type="checkbox" disabled class="custom-control-input" id="switch-pyro">
                             <label class="custom-control-label" for="switch-piro">Cateur pyro 01</label>
@@ -53,11 +54,11 @@
                     </div>
 
                     <div class="col-10 offset-1 col-md-8 offset-md-2 bg-white panel-tool">
-                        <h2>Infos système</h2>
+                        <h2 id="section-infos_sys">Infos système</h2>
                         <p class="infos">Raspberry: <span class="dot dot--green"></span></p>
-                        <p class="infos">Port série: <span class="dot dot--unknow"></span></p>
+                        <p id="serialSync" class="infos">Port série: <span class="dot dot--red"></span></p>
                         <p id="infosSync" class="infos">Sync. temps réel: <span class="dot dot--red"></span></p>
-                        <p class="infos">Jarvis (Ghips): <span class="dot dot--unknow"></span></p>
+                        <p class="infos">Jarvis (Ghips): <span class="dot dot--red"></span></p>
                     </div>
                 </div>
             </div>

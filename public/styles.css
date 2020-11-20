@@ -2,10 +2,10 @@ main{
     padding-bottom: 75px;
 }
 header{
-    height: 7vh;
+    height: 58px;
 }
 h2{
-    position: relative;
+    /* position: relative; */
 }
 footer{
     margin: 0;
@@ -14,6 +14,10 @@ footer{
 }
 footer p{
     margin: 0;
+}
+.btn{
+    font-size: 12px;
+    padding: 4px 12px;
 }
 .panel-tool{
     padding: 60px 60px;
@@ -52,13 +56,16 @@ footer p{
     right: 0;
 }
 .dot--title{
-    margin-top: 12px;
-}
-.dot--orange{
-    background-color: orange;
+    position: absolute;
+    top: 12px;
+    right: 12px;
+    margin-top: 0;
 }
 .dot--red{
     background-color: #bd2130;
+}
+.dot--orange{
+    background-color: orange;
 }
 .dot--green{
     background-color: #4caf50 !important;
@@ -66,7 +73,23 @@ footer p{
 .dot--unknow{
     background-color: #e83eba;
 }
-.custom-control-input:checked~.custom-control-label::before{
+.custom-control-input:checked~.custom-control-label::before, .btn{
     background-color: orange;
     border-color: darkorange;
+}
+.btn-container{
+    margin-top: 20px;
+}
+.btn:hover{
+    background-color: darkorange;
+    border-color: orange;
+}
+.btn:active, .btn:focus{
+    background-color: darkorange !important;
+    border-color: orange !important;
+    box-shadow: 0 0 0 0.2rem rgba(255, 166, 0,.5) !important;
+}
+
+input:focus{
+    box-shadow: 0 0 0 0.2rem rgba(255, 166, 0,.5) !important;
 }

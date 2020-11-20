@@ -2,9 +2,12 @@ var express = require('express');
 var app = express();
 const ejs = require('ejs');
 const os = require('os');
+var favicon = require('serve-favicon');
 
 app.use("/public", express.static(__dirname + '/public'));
+app.use(favicon(__dirname + '/public/images/favicon.ico'));
 
+process.setMaxListeners(0);
 
 // ------------ Serial Port. ---------------------------------------- //
 const SerialPort = require('serialport');

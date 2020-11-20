@@ -55,7 +55,18 @@ void loop() {
     
     testWord = Serial.readString();
     testWord.trim();
-    if(testWord.substring(0) == "yellow-1"){
+    
+    if(testWord.substring(0) == "all-1"){
+      digitalWrite(8, HIGH);
+      digitalWrite(7, HIGH);
+      digitalWrite(6, HIGH);
+    }
+    else if(testWord.substring(0) == "all-0"){
+      digitalWrite(8, LOW);
+      digitalWrite(7, LOW);
+      digitalWrite(6, LOW);
+    }
+    else if(testWord.substring(0) == "yellow-1"){
       digitalWrite(8, HIGH);
     }
     else if(testWord.substring(0) == "yellow-0"){
