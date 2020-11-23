@@ -51,6 +51,11 @@ app.get('/', function(req, res) {
     res.setHeader('Content-Type', 'text/html');
     res.render('dashboard.ejs', {local_ip: ip});
 });
+// Page des logs.
+app.get('/logs/', function(req, res) {
+    res.setHeader('Content-Type', 'text/html');
+    res.render('logs.ejs', {local_ip: ip});
+});
 
 // Chargement de socket.io
 const io = require('socket.io')(server);
