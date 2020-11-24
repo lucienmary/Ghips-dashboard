@@ -5,6 +5,9 @@ main{
 header{
     height: 58px;
 }
+h3{
+    font-size: 22px;
+}
 h2{
     /* position: relative; */
 }
@@ -107,6 +110,11 @@ footer a{
 
 input:focus{
     box-shadow: 0 0 0 0.2rem rgba(255, 166, 0,.5) !important;
+}
+
+#timer{
+    font-size: 36px;
+    margin: 0;
 }
 
 

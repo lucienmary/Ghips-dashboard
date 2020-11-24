@@ -19,6 +19,12 @@
             <div class="container">
                 <div class="row">
                     <div class="col-10 offset-1 col-md-8 offset-md-2 bg-white panel-tool">
+                        <p id="timer"><strong>00:00:00</strong></p>
+                        <p id="date">01/01/2000</p>
+                        <h2 id="section-timer">Réveil<span class="dot dot--red dot--title"></span></h2>
+                        <p id="clock-alarm">08:00:00</p>
+                    </div>
+                    <div class="col-10 offset-1 col-md-8 offset-md-2 bg-white panel-tool">
                         <h2 id="section-input">Input chambre<span class="dot dot--red dot--title"></span></h2>
                         <p class="infos">Température: <span id="temp"><strong>--°C</strong></span></p>
                         <p class="infos">Temp. ressentie: <span id="temp-r"><strong>--°C</strong></span></p>
@@ -78,5 +84,6 @@
         </script>
         <script type="text/javascript" src="/public/connect_socket.js"></script>
         <script type="text/javascript" src="/public/switchies.js"></script>
+        <script type="text/javascript" src="/public/timer.js"></script>
     </body>
 </html>
