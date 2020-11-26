@@ -35,30 +35,28 @@ function setBlockClockAlarm() {
         $('#clock-alarm-list').append(`
             <li><form class="clock-alarm-block" id="clock-alarm`+cptBlockClockAlarm+`-block">
             <label for="clock-alarm`+cptBlockClockAlarm+`">Alarme `+cptBlockClockAlarm+`:</label>
-            <input type="time" id="clock-alarm`+cptBlockClockAlarm+`" name="clock-alarm`+cptBlockClockAlarm+`" required>
-            <button type="submit" class="btn btn-secondary clock-alarm-validation">Ok</button>
-            <a class="btn btn-secondary clock-alarm-cancel disabled">Annuler</a>
+            <input class="input-clock-alarm trans-stroke" type="time" id="clock-alarm`+cptBlockClockAlarm+`" name="clock-alarm`+cptBlockClockAlarm+`" required>
+            <a id="clock-alarm`+cptBlockClockAlarm+`-validation" class="btn btn-secondary clock-alarm-validation">Ok</a>
+            <a id="clock-alarm`+cptBlockClockAlarm+`-cancel" class="btn btn-secondary clock-alarm-cancel disabled">Annuler</a>
             <form></li>
         `);
-        console.log(cptBlockClockAlarm);
     }
 
+    $('.clock-alarm-block .clock-alarm-validation').click(function(e){
+        e.preventDefault();
+        if ($('#clock-alarm'+cptBlockClockAlarm).val()) {
+            $('#clock-alarm'+cptBlockClockAlarm+'-block').append('<small>✌️</small>');
+            $(this).addClass('disabled');
+            $('#clock-alarm'+ cptBlockClockAlarm +'-cancel').removeClass('disabled');
+            $('#clock-alarm'+cptBlockClockAlarm).addClass('trans-stroke').removeClass('red-stroke');
 
+            cptBlockClockAlarmActive++;
+            alarmActiveList['alarm'+cptBlockClockAlarmActive] = $('#clock-alarm'+ cptBlockClockAlarm).val();
+
+            console.log(alarmActiveList);
+            setBlockClockAlarm();
+        }else{
+            $('#clock-alarm'+cptBlockClockAlarm).removeClass('trans-stroke').addClass('red-stroke');
+        }
+    });
 }
-
-$("#clock-alarm"+cptBlockClockAlarm+"-block").submit(function(event){
-    console.log(this.id);
-
-    $('#'+this.id).append('<small>✌️</small>');
-    $('#'+this.id+' .clock-alarm-validation').prop("disabled",true);
-    $('#'+this.id+' .clock-alarm-cancel').removeClass('disabled');
-
-    cptBlockClockAlarmActive++;
-    alarmActiveList['alarm'+cptBlockClockAlarmActive] = $( "input" ).val();
-
-    console.log(alarmActiveList);
-    console.log(event);
-    event.preventDefault();
-
-    setBlockClockAlarm();
-});

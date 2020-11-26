@@ -112,11 +112,29 @@ input:focus{
     box-shadow: 0 0 0 0.2rem rgba(255, 166, 0,.5) !important;
 }
 
+.red-stroke{
+    border: 2px solid #bd2130;
+    transition: all 0.3s ease-out;
+}
+.trans-stroke{
+    border: 2px solid #bababa;
+    transition: all 0.3s ease-out;
+}
+
+/* -------- Réveil & heure. -------- */
 #timer{
     font-size: 36px;
     margin: 0;
 }
-
+#clock-alarm-list{
+    padding: 0;
+    list-style: none;
+}
+.input-clock-alarm{
+    border-radius: 6px;
+    display: inline-block;
+    padding-bottom: 3px;
+}
 
 /* -------- LOGS -------- */
 
