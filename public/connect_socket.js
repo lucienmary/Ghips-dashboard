@@ -11,9 +11,9 @@ socket.on('new_connection', function(msg) {
 })
 
 socket.on('alarmSettings', function(alarmSettings) {
-    window.sessionStorage.setItem('alarmCount', alarmSettings.alarmCount);
 
     alarmActiveList = alarmSettings.alarmActiveList;
+    alarmCount = alarmSettings.alarmCount;
 
     alarmView();
 });

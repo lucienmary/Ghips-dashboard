@@ -16,8 +16,8 @@ function timer() {
     var h = addZero(d.getHours());
     var m = addZero(d.getMinutes());
     var s = addZero(d.getSeconds());
-    $('#date').text(date);
-    $('#timer strong').text(h + ":" + m + ":" + s);
+    $('#date-input').text(date);
+    $('#timer-input strong').text(h + ":" + m + ":" + s);
 }
 
 
@@ -36,8 +36,6 @@ $('#alarm-validation-input').click(() =>{
         console.log(alarmValue);
 
         $('#alarm-hour-input').addClass('trans-stroke');
-
-        var alarmCount = window.sessionStorage.getItem('alarmCount');
         var nameObject = 'alarm_'+alarmCount;
         var alarmDay = [];
 
@@ -52,8 +50,7 @@ $('#alarm-validation-input').click(() =>{
         alarmActiveList[nameObject] = {alarmName: $('#alarmName').val(), alarmHour: alarmValue, alarmDay: alarmDay};
 
         console.log(alarmActiveList);
-        window.sessionStorage.setItem('alarmCount', parseInt(alarmCount)+1);
-        socket.emit("alarmSent", alarmActiveList);
+        socket.emit("alarmSent", {alarmActiveList: alarmActiveList, alarmCount: alarmCount+1});
 
         $('#alarm-hour-input').val('');
         $('#alarmName').val('');

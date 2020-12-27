@@ -97,8 +97,12 @@ io.sockets.on('connection', function (socket) {
 
     // Nouvelles alarmes (Réveil).
     socket.on("alarmSent", (data) => {
-        alarmActiveList = data;
+        alarmActiveList = data.alarmActiveList;
+        alarmCount = data.alarmCount;
+
         console.log(alarmActiveList);
+
+        io.emit('alarmSettings', {alarmCount: alarmCount, alarmActiveList: alarmActiveList});
     });
 
 });
