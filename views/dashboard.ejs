@@ -19,10 +19,53 @@
             <div class="container">
                 <div class="row">
                     <div class="col-10 offset-1 col-md-8 offset-md-2 bg-white panel-tool">
-                        <p id="timer"><strong>00:00:00</strong></p>
-                        <p id="date">01/01/2000</p>
-                        <h2 id="section-timer">Réveil<span class="dot dot--green dot--title"></span></h2>
-                        <ul id="clock-alarm-list">
+                        <p id="timer-input"><strong>00:00:00</strong></p>
+                        <p id="date-input">01/01/2000</p>
+                        <h2 id="section-timer-input">Réveil<span class="dot dot--green dot--title"></span></h2>
+
+                        <form class="alarm-block" id="alarm-input">
+                            <label for="alarm">Alarme:</label>
+                            <input class="input-alarm trans-stroke" type="time" id="alarm-hour-input">
+                            <input type="text" id="alarmName">
+
+                            <p id="view-timer-week-input"></p>
+
+                            <div id="timer-week-input">
+                                <div>
+                                    <input type="checkbox" id="LDay-input" name="L">
+                                    <label for="L">L</label>
+                                </div>
+                                <div>
+                                    <input type="checkbox" id="MaDay-input" name="Ma">
+                                    <label for="Ma">Ma</label>
+                                </div>
+                                <div>
+                                    <input type="checkbox" id="MeDay-input" name="Me">
+                                    <label for="Me">Me</label>
+                                </div>
+                                <div>
+                                    <input type="checkbox" id="JDay-input" name="J">
+                                    <label for="J">J</label>
+                                </div>
+                                <div>
+                                    <input type="checkbox" id="VDay-input" name="V">
+                                    <label for="V">V</label>
+                                </div>
+                                <div>
+                                    <input type="checkbox" id="SDay-input" name="S">
+                                    <label for="S">S</label>
+                                </div>
+                                <div>
+                                    <input type="checkbox" id="DDay-input" name="D">
+                                    <label for="D">D</label>
+                                </div>
+                            </div>
+                            <div class="timer-validation">
+                                <a id="alarm-validation-input" class="btn btn-secondary alarm-validation">Ok</a>
+                            </div>
+                        </form>
+
+                        <ul id="alarm-list">
                         </ul>
                     </div>
                     <div class="col-10 offset-1 col-md-8 offset-md-2 bg-white panel-tool">
@@ -83,8 +126,9 @@
         <script type="text/javascript">
             sessionStorage.setItem('local-IP', '<%= local_ip %>');
         </script>
+        <script type="text/javascript" src="/public/timer.js"></script>
+
         <script type="text/javascript" src="/public/connect_socket.js"></script>
         <script type="text/javascript" src="/public/switchies.js"></script>
-        <script type="text/javascript" src="/public/timer.js"></script>
     </body>
 </html>

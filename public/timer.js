@@ -21,97 +21,68 @@ function timer() {
 }
 
 
-// Set block ALARM (réveil) et fonctionnement.
+// Bloc de création d'alarmes.
 // -------------------------------------------
+//
+//      => Envoie les données au serveur pour set les alarmes.
+//      => Appelle alarmView() qui affiche les alarmes dans le dashboard.
+//
+
 var alarmActiveList = {};
-var cptBlockClockAlarm = 0;
-var cptBlockClockAlarmActive = 0;
 
-setBlockClockAlarm();
-function setBlockClockAlarm() {
+$('#alarm-validation-input').click(() =>{
+    if ($('#alarm-hour-input').val() != ''){
+        var alarmValue = $('#alarm-hour-input').val();
+        console.log(alarmValue);
 
-    if (cptBlockClockAlarm == cptBlockClockAlarmActive) {
-        cptBlockClockAlarm++;
-        $('#clock-alarm-list').append(`
-            <li><form class="clock-alarm-block" id="clock-alarm`+cptBlockClockAlarm+`-block">
-            <label for="clock-alarm`+cptBlockClockAlarm+`">Alarme <span id="alarm-name`+cptBlockClockAlarm+`"></span>:</label>
-            <input class="input-clock-alarm trans-stroke" type="time" id="clock-alarm`+cptBlockClockAlarm+`" name="clock-alarm`+cptBlockClockAlarm+`" required>
-            <input type="text" id="name-clock-alarm`+cptBlockClockAlarm+`">
+        $('#alarm-hour-input').addClass('trans-stroke');
 
-            <p id="view-timer-week`+cptBlockClockAlarm+`"></p>
+        var alarmCount = window.sessionStorage.getItem('alarmCount');
+        var nameObject = 'alarm_'+alarmCount;
+        var alarmDay = [];
 
-            <div id="timer-week`+cptBlockClockAlarm+`">
-                <div>
-                    <input type="checkbox" id="L`+ cptBlockClockAlarm +`" name="L">
-                    <label for="L">L</label>
-                </div>
-                <div>
-                    <input type="checkbox" id="Ma`+ cptBlockClockAlarm +`" name="Ma">
-                    <label for="Ma">Ma</label>
-                </div>
-                <div>
-                    <input type="checkbox" id="Me`+ cptBlockClockAlarm +`" name="Me">
-                    <label for="Me">Me</label>
-                </div>
-                <div>
-                    <input type="checkbox" id="J`+ cptBlockClockAlarm +`" name="J">
-                    <label for="J">J</label>
-                </div>
-                <div>
-                    <input type="checkbox" id="V`+ cptBlockClockAlarm +`" name="V">
-                    <label for="V">V</label>
-                </div>
-                <div>
-                    <input type="checkbox" id="S`+ cptBlockClockAlarm +`" name="S">
-                    <label for="S">S</label>
-                </div>
-                <div>
-                    <input type="checkbox" id="D`+ cptBlockClockAlarm +`" name="D">
-                    <label for="D">D</label>
-                </div>
-            </div>
-            <div class="timer-validation">
-            <a id="clock-alarm`+cptBlockClockAlarm+`-validation" class="btn btn-secondary clock-alarm-validation">Ok</a>
-            <a id="clock-alarm`+cptBlockClockAlarm+`-cancel" class="btn btn-secondary clock-alarm-cancel disabled">Annuler</a>
-            </div>
-            <form></li>
-        `);
+        if ($('#LDay-input').is(':checked')) alarmDay.push('L');
+        if ($('#MaDay-input').is(':checked')) alarmDay.push('Ma');
+        if ($('#MeDay-input').is(':checked')) alarmDay.push('Me');
+        if ($('#JDay-input').is(':checked')) alarmDay.push('J');
+        if ($('#VDay-input').is(':checked')) alarmDay.push('V');
+        if ($('#SDay-input').is(':checked')) alarmDay.push('S');
+        if ($('#DDay-input').is(':checked')) alarmDay.push('D');
+
+        alarmActiveList[nameObject] = {alarmName: $('#alarmName').val(), alarmHour: alarmValue, alarmDay: alarmDay};
+
+        console.log(alarmActiveList);
+        window.sessionStorage.setItem('alarmCount', parseInt(alarmCount)+1);
+        socket.emit("alarmSent", alarmActiveList);
+
+        $('#alarm-hour-input').val('');
+        $('#alarmName').val('');
+
+        alarmView();
     }
+    else $('#alarm-hour-input').removeClass('trans-stroke').addClass('red-stroke');
+});
 
-    $('.clock-alarm-block .clock-alarm-validation').click(function(e){
-        e.preventDefault();
-        if ($('#clock-alarm'+cptBlockClockAlarm).val()) {
-            $('#alarm-name'+cptBlockClockAlarm).append('<strong>'+ $('#name-clock-alarm'+cptBlockClockAlarm).val() +'</strong>');
-            $('#name-clock-alarm'+cptBlockClockAlarm).css('display','none');
-            $('#clock-alarm'+cptBlockClockAlarm+'-block').append('<small class="timer-check">✌️</small>');
-            $(this).addClass('disabled');
-            $('#clock-alarm'+ cptBlockClockAlarm +'-cancel').removeClass('disabled');
-            $('#clock-alarm'+cptBlockClockAlarm).addClass('trans-stroke').removeClass('red-stroke');
 
-            // Détection Jours.
-            var daySet=[];
-            if ($('#L'+ cptBlockClockAlarm).is(':checked')) daySet.push($('#L'+ cptBlockClockAlarm).attr("name"));
-            if ($('#Ma'+ cptBlockClockAlarm).is(':checked')) daySet.push($('#Ma'+ cptBlockClockAlarm).attr("name"));
-            if ($('#Me'+ cptBlockClockAlarm).is(':checked')) daySet.push($('#Me'+ cptBlockClockAlarm).attr("name"));
-            if ($('#J'+ cptBlockClockAlarm).is(':checked')) daySet.push($('#J'+ cptBlockClockAlarm).attr("name"));
-            if ($('#V'+ cptBlockClockAlarm).is(':checked')) daySet.push($('#V'+ cptBlockClockAlarm).attr("name"));
-            if ($('#S'+ cptBlockClockAlarm).is(':checked')) daySet.push($('#S'+ cptBlockClockAlarm).attr("name"));
-            if ($('#D'+ cptBlockClockAlarm).is(':checked')) daySet.push($('#D'+ cptBlockClockAlarm).attr("name"));
+function alarmView() {
 
-            $('#timer-week'+cptBlockClockAlarm).css('display','none');
+    $('#alarm-list').empty();
 
-            for (var i = 0; i < daySet.length; i++) {
-                console.log('loop');
-                $('#view-timer-week'+cptBlockClockAlarm).append('<span><strong>'+ daySet[i] +' <strong></span>');
+    for (var i = 0; i < Object.values(alarmActiveList).length; i++) {
+
+        $('#alarm-list').append(`
+            <li id="alarm-`+ i +`" class="alarm-list__el">
+                <h3>`+ window["alarmActiveList"]["alarm_"+i]["alarmName"] +`<h3>
+                <p>`+ window["alarmActiveList"]["alarm_"+i]["alarmHour"] +`</p>
+            </li>
+            <ul id="alarmDays-`+ i +`"></ul>
+        `);
+        if (window["alarmActiveList"]["alarm_"+i]["alarmDay"].length > 0){
+            for (var j = 0; j < Object.values(window["alarmActiveList"]["alarm_"+i]["alarmDay"]).length; j++) {
+                $('#alarmDays-'+i).append(`
+                    <li>`+window["alarmActiveList"]["alarm_"+i]["alarmDay"][j]+`</li>
+                `);
             }
-
-            cptBlockClockAlarmActive++;
-            alarmActiveList['alarm'+cptBlockClockAlarmActive] = [{alarm: $('#clock-alarm'+ cptBlockClockAlarm).val()}, {days: daySet}];
-
-            console.log(alarmActiveList);
-            setBlockClockAlarm();
-        }else{
-            $('#clock-alarm'+cptBlockClockAlarm).removeClass('trans-stroke').addClass('red-stroke');
         }
-    });
+    }
 }

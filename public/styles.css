@@ -126,11 +126,11 @@ input:focus{
     font-size: 36px;
     margin: 0;
 }
-#clock-alarm-list{
+#alarm-list{
     padding: 0;
     list-style: none;
 }
-.input-clock-alarm{
+.input-alarm{
     border-radius: 6px;
     display: inline-block;
     padding-bottom: 3px;
@@ -149,7 +149,7 @@ input:focus{
     right: 10px;
     font-size: 24px;
 }
-.clock-alarm-block{
+.alarm-block{
     background-color: #f6f6f6;
     box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
     padding: 10px;

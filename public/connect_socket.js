@@ -1,5 +1,6 @@
 const localIP = sessionStorage.getItem('local-IP');
 var socket = io.connect('http://'+ localIP +':6533/');
+var alarmCount;
 
 socket.on('new_connection', function(msg) {
     console.log('%c'+ msg, 'color: lightgreen');
@@ -9,6 +10,13 @@ socket.on('new_connection', function(msg) {
     $('#section-input span').addClass('dot--orange');
 })
 
+socket.on('alarmSettings', function(alarmSettings) {
+    window.sessionStorage.setItem('alarmCount', alarmSettings.alarmCount);
+
+    alarmActiveList = alarmSettings.alarmActiveList;
+
+    alarmView();
+});
 
 socket.on('switch-blue-led', function(val) {
     if(val == 1) $("#switch-blue-led").prop("checked", true);

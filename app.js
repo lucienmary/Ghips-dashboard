@@ -4,6 +4,9 @@ const ejs = require('ejs');
 const os = require('os');
 var favicon = require('serve-favicon');
 
+var alarmCount = 0;
+var alarmActiveList = {};
+
 app.use("/public", express.static(__dirname + '/public'));
 app.use(favicon(__dirname + '/public/images/favicon.ico'));
 
@@ -60,7 +63,9 @@ app.get('/logs/', function(req, res) {
 // Chargement de socket.io
 const io = require('socket.io')(server);
 io.sockets.on('connection', function (socket) {
-socket.emit('new_connection', 'Socket.io > Ready! 🔥');
+    socket.emit('new_connection', 'Socket.io > Ready! 🔥');
+
+    socket.emit('alarmSettings', {alarmCount: alarmCount, alarmActiveList: alarmActiveList});
 
     // Envoi port série + sync. switch.
     app.get('/switch/:nameAndValue', function(req, res) {
@@ -87,6 +92,13 @@ socket.emit('new_connection', 'Socket.io > Ready! 🔥');
 
             msgIsRunning = '';
         }
+    });
+
+
+    // Nouvelles alarmes (Réveil).
+    socket.on("alarmSent", (data) => {
+        alarmActiveList = data;
+        console.log(alarmActiveList);
     });
 
 });
