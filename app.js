@@ -3,6 +3,7 @@ var app = express();
 const ejs = require('ejs');
 const os = require('os');
 var favicon = require('serve-favicon');
+const sound = require("sound-play");
 
 var alarmCount = 0;
 var alarmActiveList = {};
@@ -11,6 +12,8 @@ app.use("/public", express.static(__dirname + '/public'));
 app.use(favicon(__dirname + '/public/images/favicon.ico'));
 
 process.setMaxListeners(0);
+
+sound.play("./public/audio/alarm.mp3");
 
 // ------------ Serial Port. ---------------------------------------- //
 const SerialPort = require('serialport');
