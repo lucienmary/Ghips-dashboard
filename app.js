@@ -4,6 +4,7 @@ const ejs = require('ejs');
 const os = require('os');
 var favicon = require('serve-favicon');
 const sound = require("sound-play");
+var alarm = require('alarm');
 
 var alarmCount = 0;
 var alarmActiveList = {};
@@ -13,7 +14,6 @@ app.use(favicon(__dirname + '/public/images/favicon.ico'));
 
 process.setMaxListeners(0);
 
-sound.play("./public/audio/alarm.mp3");
 
 // ------------ Serial Port. ---------------------------------------- //
 const SerialPort = require('serialport');
@@ -103,9 +103,25 @@ io.sockets.on('connection', function (socket) {
         alarmActiveList = data.alarmActiveList;
         alarmCount = data.alarmCount;
 
-        console.log(alarmActiveList);
+        console.log(data.alarmActiveList);
+
+        var now = new Date('January 8, 2021 00:00:00');
+
+        console.log('Hour:');
+        console.log(data.alarmActiveList.alarm_0.alarmHour);
+        console.log('Minutes:');
+        console.log(data.alarmActiveList.alarm_0.alarmMinute);
+
+        now.setHours(data.alarmActiveList.alarm_0.alarmHour);
+        now.setMinutes(data.alarmActiveList.alarm_0.alarmMinute);
+
+        console.log(now);
+
+        alarm( now, function() {
+          console.log('Wake up! (' + now +')');
+          sound.play("./public/audio/alarm.mp3");
+        });
 
         io.emit('alarmSettings', {alarmCount: alarmCount, alarmActiveList: alarmActiveList});
     });
-
 });

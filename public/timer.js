@@ -47,7 +47,12 @@ $('#alarm-validation-input').click(() =>{
         if ($('#SDay-input').is(':checked')) alarmDay.push('S');
         if ($('#DDay-input').is(':checked')) alarmDay.push('D');
 
-        alarmActiveList[nameObject] = {alarmName: $('#alarmName').val(), alarmHour: alarmValue, alarmDay: alarmDay};
+        var elTime = alarmValue.split(':');
+
+        var alarmHour = elTime[0];
+        var alarmMinute = elTime[1];
+
+        alarmActiveList[nameObject] = {alarmName: $('#alarmName').val(), alarmHour: alarmHour, alarmMinute: alarmMinute, alarmDay: alarmDay};
 
         console.log(alarmActiveList);
         socket.emit("alarmSent", {alarmActiveList: alarmActiveList, alarmCount: alarmCount+1});
@@ -59,7 +64,6 @@ $('#alarm-validation-input').click(() =>{
     }
     else $('#alarm-hour-input').removeClass('trans-stroke').addClass('red-stroke');
 });
-
 
 function alarmView() {
 
